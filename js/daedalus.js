@@ -17,61 +17,42 @@
       else window.open(dest);
     }
 
-    var listenWolframAlpha = function() {
+    var listenDaedalus = function(root) {
       listenSound.play();
-      annyang.removeCommands(defaultCommandNames);
-      annyang.addCommands({ "*query": searchWolframAlpha });
+      annyang.removeCommands(startCommandNames);
+      annyang.addCommands({ 
+        "*query": function(query) {
+          searchDaedalus(root + query);
+        }
+      });
     }
 
-    var searchWolframAlpha = function(query) {
+    var searchDaedalus = function(dest) {
       searchSound.play();
-      var dest = "//www.wolframalpha.com/input/?i=" + query;
       openNewTab(dest);
       annyang.removeCommands("*query");
-      annyang.addCommands(defaultCommands);
+      annyang.addCommands(startCommands);
     }
 
-    var listenGoogle = function() {
-      listenSound.play();
-      annyang.removeCommands(defaultCommandNames);
-      annyang.addCommands({ "*query": searchGoogle });
-    }
-
-    var searchGoogle = function(query) {
-      searchSound.play();
-      var dest = "//www.google.com/search?q=" + query;
-      openNewTab(dest);
-      annyang.removeCommands("*query");
-      annyang.addCommands(defaultCommands);
-    }
-
-    var listenWikipedia = function() {
-      listenSound.play();
-      annyang.removeCommands(defaultCommandNames);
-      annyang.addCommands({ "*query": searchWikipedia });
-    }
-
-    var searchWikipedia = function(query) {
-      searchSound.play();
-      var dest = "//www.wikipedia.org/wiki/" + query;
-      openNewTab(dest);
-      annyang.removeCommands("*query");
-      annyang.addCommands(defaultCommands);
-    }
-
-    var defaultCommands = {
-      "wolfram alpha": listenWolframAlpha,
-      "google": listenGoogle,
-      "wikipedia": listenWikipedia
+    var startCommands = {
+      "wolfram alpha": function() {
+        listenDaedalus("//www.wolframalpha.com/input/?i=");
+      },
+      "google": function() {
+        listenDaedalus("//www.google.com/search?q=");
+      },
+      "wikipedia": function() {
+        listenDaedalus("//www.wikipedia.org/wiki/");
+      }
     }
     
-    var defaultCommandNames = [
+    var startCommandNames = [
       "wolfram alpha",
       "google",
       "wikipedia"
     ]
 
-    annyang.init(defaultCommands);
+    annyang.init(startCommands);
     annyang.start();
 
   }
