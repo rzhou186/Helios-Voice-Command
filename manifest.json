@@ -11,5 +11,5 @@
   "background": {
     "scripts": [ "/lib/annyang.min.js" , "/js/daedalus.js" ]
   },
-  "permissions": [ "tabs", "audioCapture" ]
+  "permissions": [ "tabs" ]
 }
