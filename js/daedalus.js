@@ -11,6 +11,11 @@
       this.src = this.src;
     }, false);
 
+    var cancelSound = new Audio("/aud/cancel.mp3");
+    cancelSound.addEventListener("ended", function() {
+      this.src = this.src;
+    }, false);
+
     var openNewTab = function(dest) {
       if (chrome.tabs)
         chrome.tabs.create({ "url": dest });
@@ -20,7 +25,8 @@
     var listenDaedalus = function(root) {
       listenSound.play();
       annyang.removeCommands(startCommandNames);
-      annyang.addCommands({ 
+      annyang.addCommands({
+        "nevermind": cancelDaedalus,
         "*query": function(query) {
           searchDaedalus(root + query);
         }
@@ -30,7 +36,13 @@
     var searchDaedalus = function(dest) {
       searchSound.play();
       openNewTab(dest);
-      annyang.removeCommands("*query");
+      annyang.removeCommands([ "nevermind", "*query" ]);
+      annyang.addCommands(startCommands);
+    }
+
+    var cancelDaedalus = function() {
+      cancelSound.play();
+      annyang.removeCommands([ "nevermind", "*query" ]);
       annyang.addCommands(startCommands);
     }
 
