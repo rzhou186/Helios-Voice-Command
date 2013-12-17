@@ -1,20 +1,14 @@
 (function(){
   if (annyang) {
+    var engines = {
+      "google": "//www.google.com/search?q=",
+      "wikipedia": "//www.wikipedia.org/wiki/",
+      "wolfram alpha": "//www.wolframalpha.com/input/?i="
+    }
 
     var listenSound = new Audio("/aud/listen.mp3");
-    listenSound.addEventListener("ended", function() {
-      this.src = this.src;
-    }, false);
-
     var searchSound = new Audio("/aud/search.mp3");
-    searchSound.addEventListener("ended", function() {
-      this.src = this.src;
-    }, false);
-
     var cancelSound = new Audio("/aud/cancel.mp3");
-    cancelSound.addEventListener("ended", function() {
-      this.src = this.src;
-    }, false);
 
     var openNewTab = function(dest) {
       if (chrome.tabs)
@@ -22,13 +16,18 @@
       else window.open(dest);
     }
 
-    var listenDaedalus = function(root) {
+    var resetDaedalus = function() {
+      annyang.removeCommands([ "nevermind", "*query" ]);
+      annyang.addCommands(startCommands);
+    }
+
+    var listenDaedalus = function(engine) {
       listenSound.play();
       annyang.removeCommands(startCommandNames);
       annyang.addCommands({
         "nevermind": cancelDaedalus,
         "*query": function(query) {
-          searchDaedalus(root + query);
+          searchDaedalus(engine + query);
         }
       });
     }
@@ -36,36 +35,23 @@
     var searchDaedalus = function(dest) {
       searchSound.play();
       openNewTab(dest);
-      annyang.removeCommands([ "nevermind", "*query" ]);
-      annyang.addCommands(startCommands);
+      resetDaedalus();
     }
 
     var cancelDaedalus = function() {
       cancelSound.play();
-      annyang.removeCommands([ "nevermind", "*query" ]);
-      annyang.addCommands(startCommands);
+      resetDaedalus();
     }
 
-    var startCommands = {
-      "google": function() {
-        listenDaedalus("//www.google.com/search?q=");
-      },
-      "wikipedia": function() {
-        listenDaedalus("//www.wikipedia.org/wiki/");
-      },
-      "wolfram alpha": function() {
-        listenDaedalus("//www.wolframalpha.com/input/?i=");
+    var startCommands = {}
+    for (var engine in engines) {
+      startCommands[engine] = function() {
+        listenDaedalus(engines[engine]);
       }
     }
+    var startCommandNames = Object.keys(engines);
     
-    var startCommandNames = [
-      "google",
-      "wikipedia",
-      "wolfram alpha"
-    ]
-
     annyang.init(startCommands);
     annyang.start();
-
   }
 })();
