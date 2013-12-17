@@ -47,21 +47,21 @@
     }
 
     var startCommands = {
-      "wolfram alpha": function() {
-        listenDaedalus("//www.wolframalpha.com/input/?i=");
-      },
       "google": function() {
         listenDaedalus("//www.google.com/search?q=");
       },
       "wikipedia": function() {
         listenDaedalus("//www.wikipedia.org/wiki/");
+      },
+      "wolfram alpha": function() {
+        listenDaedalus("//www.wolframalpha.com/input/?i=");
       }
     }
     
     var startCommandNames = [
-      "wolfram alpha",
       "google",
-      "wikipedia"
+      "wikipedia",
+      "wolfram alpha"
     ]
 
     annyang.init(startCommands);
