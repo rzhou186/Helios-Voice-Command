@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Daedalus",
+  "version": "1.0.0",
+  "description": "A passively voice-controlled search engine. Recognizes and executes queries for Google, Wikipedia, and Wolfram|Alpha.",
+  "icons": {
+    "16": "/img/icon16.png",
+    "48": "/img/icon48.png",
+    "128": "/img/icon128.png"
+  },
+  "background": {
+    "scripts": [ "/lib/annyang.min.js" , "/js/daedalus.js" ]
+  },
+  "permissions": [ "tabs", "audioCapture" ]
+}
