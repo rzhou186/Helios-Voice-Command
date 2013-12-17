@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Daedalus",
   "version": "1.0.0",
-  "description": "A passively voice-controlled search engine. Recognizes and executes queries for Google, Wikipedia, and Wolfram|Alpha.",
+  "description": "A passive, voice-controlled background search engine. Recognizes and executes queries for Google, Wikipedia, and Wolfram|Alpha.",
   "icons": {
     "16": "/img/icon16.png",
     "48": "/img/icon48.png",
