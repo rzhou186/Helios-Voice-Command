@@ -1,10 +1,11 @@
 (function(){
   if (annyang) {
-    var engines = {
-      "google": "//www.google.com/search?q=",
-      "wikipedia": "//www.wikipedia.org/wiki/",
-      "wolfram alpha": "//www.wolframalpha.com/input/?i="
-    }
+
+    var roots = {
+      "Google": "//www.google.com/search?q=",
+      "Wikipedia": "//www.wikipedia.org/wiki/",
+      "Wolfram|Alpha": "//www.wolframalpha.com/input/?i="
+    };
 
     var listenSound = new Audio("/aud/listen.mp3");
     var searchSound = new Audio("/aud/search.mp3");
@@ -14,44 +15,43 @@
       if (chrome.tabs)
         chrome.tabs.create({ "url": dest });
       else window.open(dest);
-    }
+    };
 
-    var resetHelios = function() {
-      annyang.removeCommands([ "nevermind", "*query" ]);
-      annyang.addCommands(startCommands);
-    }
-
-    var listenHelios = function(engine) {
+    var listenHelios = function() {
       listenSound.play();
-      annyang.removeCommands(startCommandNames);
-      annyang.addCommands({
-        "nevermind": cancelHelios,
-        "*query": function(query) {
-          searchHelios(engine + query);
-        }
-      });
-    }
+      annyang.removeCommands(triggerWord);
+      annyang.addCommands(listenCommands);
+    };
 
     var searchHelios = function(dest) {
       searchSound.play();
       openNewTab(dest);
       resetHelios();
-    }
+    };
 
     var cancelHelios = function() {
       cancelSound.play();
       resetHelios();
-    }
+    };
 
-    var startCommands = {}
-    for (var engine in engines) {
-      startCommands[engine] = function() {
-        listenHelios(engines[engine]);
+    var resetHelios = function() {
+      annyang.removeCommands(listenWords);
+      annyang.addCommands(triggerCommand);
+    };
+
+    var triggerWord = "helios";
+    var triggerCommand = { "helios": listenHelios };
+
+    var listenWords = [ "nevermind", "*query" ];
+    var listenCommands = {
+      "nevermind": cancelHelios,
+      "*query": function(query) {
+        searchHelios(roots["Wolfram|Alpha"] + query);
       }
-    }
-    var startCommandNames = Object.keys(engines);
+    };
     
-    annyang.init(startCommands);
+    annyang.init(triggerCommand);
     annyang.start();
+
   }
 })();
