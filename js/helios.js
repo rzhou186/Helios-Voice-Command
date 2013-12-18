@@ -16,37 +16,37 @@
       else window.open(dest);
     }
 
-    var resetDaedalus = function() {
+    var resetHelios = function() {
       annyang.removeCommands([ "nevermind", "*query" ]);
       annyang.addCommands(startCommands);
     }
 
-    var listenDaedalus = function(engine) {
+    var listenHelios = function(engine) {
       listenSound.play();
       annyang.removeCommands(startCommandNames);
       annyang.addCommands({
-        "nevermind": cancelDaedalus,
+        "nevermind": cancelHelios,
         "*query": function(query) {
-          searchDaedalus(engine + query);
+          searchHelios(engine + query);
         }
       });
     }
 
-    var searchDaedalus = function(dest) {
+    var searchHelios = function(dest) {
       searchSound.play();
       openNewTab(dest);
-      resetDaedalus();
+      resetHelios();
     }
 
-    var cancelDaedalus = function() {
+    var cancelHelios = function() {
       cancelSound.play();
-      resetDaedalus();
+      resetHelios();
     }
 
     var startCommands = {}
     for (var engine in engines) {
       startCommands[engine] = function() {
-        listenDaedalus(engines[engine]);
+        listenHelios(engines[engine]);
       }
     }
     var startCommandNames = Object.keys(engines);

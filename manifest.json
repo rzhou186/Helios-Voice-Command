@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Daedalus Voice Search",
+  "name": "Helios Voice Command",
   "version": "1.0.0",
-  "description": "A voice-powered background search engine. Passively listens for and executes Google, Wikipedia, and Wolfram|Alpha queries.",
+  "description": "A voice-powered browser command system. Passively listens for and executes Google, Wikipedia, and Wolfram|Alpha queries.",
   "icons": {
     "16": "/img/icon16.png",
     "48": "/img/icon48.png",
